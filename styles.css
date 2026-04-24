@@ -17,12 +17,24 @@ body {
 .container {
     text-align: center;
     background: rgba(255, 255, 255, 0.1);
+    /* フォールバック用の背景色 */
+    background: rgba(255, 255, 255, 0.2);
     padding: 60px 40px;
     border-radius: 20px;
+    /* backdrop-filter対応ブラウザ用 */
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    -webkit-animation: fadeInUp 0.8s ease-out;
     animation: fadeInUp 0.8s ease-out;
+}
+
+/* backdrop-filter未対応ブラウザ向けのフォールバック */
+@supports not (backdrop-filter: blur(10px)) {
+    .container {
+        background: rgba(255, 255, 255, 0.25);
+    }
 }
 
 .hello-text {
@@ -31,6 +43,7 @@ body {
     font-weight: bold;
     margin-bottom: 20px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    -webkit-animation: pulse 2s infinite;
     animation: pulse 2s infinite;
 }
 
@@ -42,22 +55,50 @@ body {
 }
 
 /* Animations */
-@keyframes fadeInUp {
+@-webkit-keyframes fadeInUp {
     from {
         opacity: 0;
+        -webkit-transform: translateY(30px);
         transform: translateY(30px);
     }
     to {
         opacity: 1;
+        -webkit-transform: translateY(0);
         transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        -webkit-transform: translateY(30px);
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+}
+
+@-webkit-keyframes pulse {
+    0%, 100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+    50% {
+        -webkit-transform: scale(1.05);
+        transform: scale(1.05);
     }
 }
 
 @keyframes pulse {
     0%, 100% {
+        -webkit-transform: scale(1);
         transform: scale(1);
     }
     50% {
+        -webkit-transform: scale(1.05);
         transform: scale(1.05);
     }
 }
