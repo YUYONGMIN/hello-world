@@ -6,6 +6,15 @@
 }
 
 /* ベーススタイル */
+html {
+    scroll-behavior: smooth !important; /* CSSでのスムーズスクロール強制 */
+}
+
+/* セクションにスクロールターゲット設定 */
+section[id] {
+    scroll-margin-top: 100px; /* ヘッダー分のオフセット */
+}
+
 :root {
     --primary-color: #2563eb;
     --primary-hover: #1d4ed8;

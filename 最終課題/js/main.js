@@ -34,19 +34,71 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // スムーススクロール（古いブラウザ対応）
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
+    // 強制的なスムーズスクロール実装
+    console.log('JavaScriptが読み込まれました');
+    
+    // DOMが完全に読み込まれてから実行
+    setTimeout(() => {
+        console.log('スムーズスクロール設定開始');
+        
+        // 全ナビリンクを取得
+        const navLinks = document.querySelectorAll('a[href^="#"]');
+        console.log('見つかったナビリンク数:', navLinks.length);
+        
+        navLinks.forEach((link, index) => {
+            console.log(`リンク${index + 1}:`, link.getAttribute('href'));
+            
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                
+                const targetId = this.getAttribute('href');
+                console.log('=== クリック検知 ===');
+                console.log('ターゲットID:', targetId);
+                
+                const targetElement = document.querySelector(targetId);
+                console.log('ターゲット要素:', targetElement);
+                
+                if (targetElement) {
+                    // ヘッダーの高さを取得
+                    const header = document.querySelector('header');
+                    const headerHeight = header ? header.offsetHeight : 80;
+                    console.log('ヘッダーの高さ:', headerHeight);
+                    
+                    // ターゲットの位置を計算
+                    const elementPosition = targetElement.offsetTop;
+                    const offsetPosition = elementPosition - headerHeight - 20;
+                    console.log('要素の位置:', elementPosition);
+                    console.log('スクロール先:', offsetPosition);
+                    
+                    // スクロール実行
+                    try {
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                        console.log('スムーズスクロール実行完了');
+                    } catch (error) {
+                        console.log('スムーズスクロール失敗、通常スクロールを実行');
+                        window.scrollTo(0, offsetPosition);
+                    }
+                    
+                    // モバイルメニューを閉じる
+                    const navMenu = document.getElementById('nav-menu');
+                    const navToggle = document.getElementById('nav-toggle');
+                    if (navMenu && navToggle) {
+                        navMenu.classList.remove('active');
+                        navToggle.classList.remove('active');
+                        console.log('モバイルメニューを閉じました');
+                    }
+                } else {
+                    console.error('ターゲット要素が見つかりません:', targetId);
+                }
+            });
         });
-    });
+        
+        console.log('スムーズスクロール設定完了');
+    }, 500);
     
     // お問い合わせフォームは削除されました
     

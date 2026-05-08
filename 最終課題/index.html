@@ -20,10 +20,10 @@
                         <a href="#home" class="nav-link">ホーム</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#3d-gallery" class="nav-link">3D Gallery</a>
+                        <a href="#works" class="nav-link">作品</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#works" class="nav-link">作品</a>
+                        <a href="#3d-gallery" class="nav-link" onclick="scrollToGallery(event)">3D Gallery</a>
                     </li>
                     <li class="nav-item">
                         <a href="#about" class="nav-link">プロフィール</a>
@@ -57,31 +57,6 @@
                     </div>
                     <div class="hero-image">
                         <img src="images/サムネイル.jpg" alt="作品サムネイル" loading="lazy">
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3Dギャラリーセクション -->
-        <section id="3d-gallery" class="section gallery-3d">
-            <div class="container">
-                <h2 class="section-title">3D Gallery</h2>
-                <p class="gallery-description">
-                    マウスをドラッグして視点を変更、WASD・矢印キーで移動できます。作品をクリックすると詳細が表示されます。
-                </p>
-                <div class="gallery-3d-container">
-                    <canvas id="gallery-canvas"></canvas>
-                    <div class="gallery-controls">
-                        <div class="control-buttons">
-                            <button id="reset-camera" class="btn btn-secondary">カメラリセット</button>
-                            <div class="keyboard-help">
-                                <span>移動: WASD / ↑↓←→</span>
-                                <span>視点: マウスドラッグ</span>
-                            </div>
-                        </div>
-                        <div class="gallery-info">
-                            <span id="work-info">作品にカーソルを合わせてください</span>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -197,6 +172,31 @@
             </div>
         </section>
 
+        <!-- 3Dギャラリーセクション -->
+        <section id="3d-gallery" class="section gallery-3d">
+            <div class="container">
+                <h2 class="section-title">3D Gallery</h2>
+                <p class="gallery-description">
+                    マウスをドラッグして視点を変更、WASD・矢印キーで移動できます。作品をクリックすると詳細が表示されます。
+                </p>
+                <div class="gallery-3d-container">
+                    <canvas id="gallery-canvas"></canvas>
+                    <div class="gallery-controls">
+                        <div class="control-buttons">
+                            <button id="reset-camera" class="btn btn-secondary">カメラリセット</button>
+                            <div class="keyboard-help">
+                                <span>移動: WASD / ↑↓←→</span>
+                                <span>視点: マウスドラッグ</span>
+                            </div>
+                        </div>
+                        <div class="gallery-info">
+                            <span id="work-info">作品にカーソルを合わせてください</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- プロフィールセクション -->
         <section id="about" class="section about">
             <div class="container">
@@ -267,5 +267,35 @@
     <!-- JavaScript -->
     <script src="js/main.js"></script>
     <script src="js/3d-gallery.js"></script>
+    
+    <!-- バックアップスクロール機能 -->
+    <script>
+        function scrollToGallery(event) {
+            event.preventDefault();
+            console.log('バックアップスクロール機能実行');
+            
+            const target = document.getElementById('3d-gallery');
+            if (target) {
+                const headerHeight = document.querySelector('header')?.offsetHeight || 80;
+                const targetPosition = target.offsetTop - headerHeight - 20;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+                
+                console.log('3D Galleryにスクロールしました');
+            } else {
+                console.error('3D Galleryセクションが見つかりません');
+            }
+        }
+        
+        // ページ読み込み後の確認
+        window.addEventListener('load', function() {
+            console.log('ページ読み込み完了');
+            console.log('3D Galleryセクション:', document.getElementById('3d-gallery'));
+            console.log('3D Galleryリンク:', document.querySelector('a[href="#3d-gallery"]'));
+        });
+    </script>
 </body>
 </html>
