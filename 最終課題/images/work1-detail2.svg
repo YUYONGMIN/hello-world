@@ -1,0 +1,71 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="300" fill="#f8fafc"/>
+  
+  <!-- Phone mockups -->
+  <!-- Phone 1 (Before) -->
+  <rect x="50" y="30" width="80" height="150" rx="12" fill="#4b5563"/>
+  <rect x="55" y="40" width="70" height="130" rx="8" fill="#ffffff"/>
+  
+  <!-- Phone 1 content -->
+  <rect x="60" y="45" width="60" height="25" rx="4" fill="#3b82f6"/>
+  <rect x="62" y="50" width="25" height="6" rx="1" fill="white"/>
+  <rect x="62" y="60" width="15" height="4" rx="1" fill="rgba(255,255,255,0.8)"/>
+  
+  <rect x="60" y="80" width="60" height="40" rx="4" fill="#f3f4f6"/>
+  <rect x="63" y="85" width="30" height="6" rx="1" fill="#6b7280"/>
+  <rect x="63" y="93" width="40" height="4" rx="1" fill="#9ca3af"/>
+  <rect x="63" y="99" width="35" height="4" rx="1" fill="#9ca3af"/>
+  <rect x="63" y="108" width="20" height="8" rx="2" fill="#3b82f6"/>
+  
+  <rect x="60" y="130" width="60" height="30" rx="4" fill="#fef3c7"/>
+  <rect x="63" y="135" width="25" height="4" rx="1" fill="#92400e"/>
+  <rect x="63" y="142" width="35" height="3" rx="1" fill="#92400e"/>
+  <rect x="63" y="148" width="30" height="3" rx="1" fill="#92400e"/>
+  
+  <text x="90" y="20" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="#ef4444" text-anchor="middle">BEFORE</text>
+  
+  <!-- Phone 2 (After) -->
+  <rect x="200" y="30" width="80" height="150" rx="12" fill="#1f2937"/>
+  <rect x="205" y="40" width="70" height="130" rx="8" fill="#ffffff"/>
+  
+  <!-- Phone 2 content -->
+  <rect x="210" y="45" width="60" height="30" rx="6" fill="linear-gradient(45deg, #3b82f6, #8b5cf6)"/>
+  <rect x="215" y="52" width="30" height="8" rx="2" fill="white"/>
+  <circle cx="260" cy="60" r="6" fill="white"/>
+  
+  <rect x="210" y="85" width="60" height="50" rx="6" fill="#f8fafc"/>
+  <rect x="215" y="92" width="35" height="8" rx="2" fill="#1f2937"/>
+  <rect x="215" y="103" width="45" height="5" rx="1" fill="#6b7280"/>
+  <rect x="215" y="111" width="40" height="5" rx="1" fill="#6b7280"/>
+  <rect x="215" y="122" width="25" height="10" rx="5" fill="#10b981"/>
+  
+  <rect x="210" y="145" width="60" height="20" rx="4" fill="#f0f9ff"/>
+  <circle cx="220" cy="155" r="4" fill="#3b82f6"/>
+  <rect x="228" y="152" width="25" height="3" rx="1" fill="#1e40af"/>
+  <rect x="228" y="158" width="20" height="3" rx="1" fill="#3730a3"/>
+  
+  <text x="240" y="20" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="#10b981" text-anchor="middle">AFTER</text>
+  
+  <!-- Comparison arrows -->
+  <path d="M 140 105 L 190 105" stroke="#6b7280" stroke-width="2" fill="none"/>
+  <polygon points="185,100 195,105 185,110" fill="#6b7280"/>
+  
+  <!-- Improvement indicators -->
+  <rect x="50" y="200" width="280" height="80" rx="8" fill="white" stroke="#e5e7eb"/>
+  
+  <!-- Metrics -->
+  <rect x="70" y="220" width="60" height="40" rx="6" fill="#dcfce7"/>
+  <text x="100" y="235" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="#166534" text-anchor="middle">Load Time</text>
+  <text x="100" y="248" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="#15803d" text-anchor="middle">-40%</text>
+  
+  <rect x="140" y="220" width="60" height="40" rx="6" fill="#dbeafe"/>
+  <text x="170" y="235" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="#1e40af" text-anchor="middle">Bounce Rate</text>
+  <text x="170" y="248" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="#1d4ed8" text-anchor="middle">-25%</text>
+  
+  <rect x="210" y="220" width="60" height="40" rx="6" fill="#fef3c7"/>
+  <text x="240" y="235" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="#92400e" text-anchor="middle">Conversions</text>
+  <text x="240" y="248" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="#d97706" text-anchor="middle">+35%</text>
+  
+  <text x="200" y="15" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#1f2937" text-anchor="middle">Mobile Optimization Results</text>
+</svg>

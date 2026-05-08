@@ -1,0 +1,96 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="300" fill="#f8fafc"/>
+  
+  <!-- Design process flow -->
+  <!-- Step 1: Research -->
+  <rect x="30" y="30" width="80" height="60" rx="8" fill="#f0f9ff" stroke="#0ea5e9"/>
+  <circle cx="70" cy="50" r="8" fill="#0ea5e9"/>
+  <rect x="40" y="65" width="60" height="4" rx="1" fill="#0284c7"/>
+  <rect x="40" y="72" width="45" height="4" rx="1" fill="#0284c7"/>
+  <text x="70" y="105" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="#0c4a6e" text-anchor="middle">Research</text>
+  
+  <!-- Arrow 1 -->
+  <path d="M 115 60 L 135 60" stroke="#6b7280" stroke-width="2" fill="none"/>
+  <polygon points="130,55 140,60 130,65" fill="#6b7280"/>
+  
+  <!-- Step 2: Wireframe -->
+  <rect x="145" y="30" width="80" height="60" rx="8" fill="#f0fdf4" stroke="#22c55e"/>
+  <rect x="155" y="40" width="60" height="40" rx="4" fill="white"/>
+  <rect x="160" y="45" width="25" height="3" rx="1" fill="#16a34a"/>
+  <rect x="160" y="52" width="35" height="3" rx="1" fill="#d1d5db"/>
+  <rect x="160" y="58" width="30" height="3" rx="1" fill="#d1d5db"/>
+  <rect x="160" y="67" width="15" height="8" rx="2" fill="#16a34a"/>
+  <text x="185" y="105" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="#14532d" text-anchor="middle">Wireframe</text>
+  
+  <!-- Arrow 2 -->
+  <path d="M 230 60 L 250 60" stroke="#6b7280" stroke-width="2" fill="none"/>
+  <polygon points="245,55 255,60 245,65" fill="#6b7280"/>
+  
+  <!-- Step 3: Design -->
+  <rect x="260" y="30" width="80" height="60" rx="8" fill="#fef7ff" stroke="#a855f7"/>
+  <rect x="270" y="40" width="60" height="40" rx="4" fill="white"/>
+  <rect x="275" y="45" width="20" height="20" rx="4" fill="#a855f7"/>
+  <rect x="300" y="50" width="25" height="3" rx="1" fill="#9333ea"/>
+  <rect x="300" y="57" width="20" height="3" rx="1" fill="#d1d5db"/>
+  <rect x="275" y="70" width="15" height="6" rx="1" fill="#7c3aed"/>
+  <text x="300" y="105" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="#581c87" text-anchor="middle">Design</text>
+  
+  <!-- User journey map -->
+  <rect x="30" y="130" width="310" height="80" rx="8" fill="white" stroke="#e5e7eb"/>
+  <text x="185" y="150" font-family="Arial, sans-serif" font-size="10" font-weight="600" fill="#1f2937" text-anchor="middle">User Journey Mapping</text>
+  
+  <!-- Journey steps -->
+  <circle cx="60" cy="175" r="12" fill="#3b82f6"/>
+  <text x="60" y="180" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="white" text-anchor="middle">1</text>
+  <text x="60" y="195" font-family="Arial, sans-serif" font-size="7" fill="#1f2937" text-anchor="middle">Discovery</text>
+  
+  <path d="M 75 175 L 105 175" stroke="#d1d5db" stroke-width="2" fill="none"/>
+  <polygon points="100,170 110,175 100,180" fill="#d1d5db"/>
+  
+  <circle cx="120" cy="175" r="12" fill="#10b981"/>
+  <text x="120" y="180" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="white" text-anchor="middle">2</text>
+  <text x="120" y="195" font-family="Arial, sans-serif" font-size="7" fill="#1f2937" text-anchor="middle">Exploration</text>
+  
+  <path d="M 135 175 L 165 175" stroke="#d1d5db" stroke-width="2" fill="none"/>
+  <polygon points="160,170 170,175 160,180" fill="#d1d5db"/>
+  
+  <circle cx="180" cy="175" r="12" fill="#f59e0b"/>
+  <text x="180" y="180" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="white" text-anchor="middle">3</text>
+  <text x="180" y="195" font-family="Arial, sans-serif" font-size="7" fill="#1f2937" text-anchor="middle">Decision</text>
+  
+  <path d="M 195 175 L 225 175" stroke="#d1d5db" stroke-width="2" fill="none"/>
+  <polygon points="220,170 230,175 220,180" fill="#d1d5db"/>
+  
+  <circle cx="240" cy="175" r="12" fill="#ef4444"/>
+  <text x="240" y="180" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="white" text-anchor="middle">4</text>
+  <text x="240" y="195" font-family="Arial, sans-serif" font-size="7" fill="#1f2937" text-anchor="middle">Action</text>
+  
+  <path d="M 255 175 L 285 175" stroke="#d1d5db" stroke-width="2" fill="none"/>
+  <polygon points="280,170 290,175 280,180" fill="#d1d5db"/>
+  
+  <circle cx="300" cy="175" r="12" fill="#8b5cf6"/>
+  <text x="300" y="180" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="white" text-anchor="middle">5</text>
+  <text x="300" y="195" font-family="Arial, sans-serif" font-size="7" fill="#1f2937" text-anchor="middle">Support</text>
+  
+  <!-- Key insights -->
+  <rect x="30" y="230" width="150" height="50" rx="6" fill="#fef3c7"/>
+  <text x="105" y="245" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="#92400e" text-anchor="middle">Key Insights</text>
+  <rect x="40" y="250" width="80" height="3" rx="1" fill="#d97706"/>
+  <rect x="40" y="258" width="100" height="3" rx="1" fill="#d97706"/>
+  <rect x="40" y="266" width="60" height="3" rx="1" fill="#d97706"/>
+  
+  <!-- Tools used -->
+  <rect x="190" y="230" width="150" height="50" rx="6" fill="#f0f9ff"/>
+  <text x="265" y="245" font-family="Arial, sans-serif" font-size="8" font-weight="600" fill="#0c4a6e" text-anchor="middle">Tools Used</text>
+  <circle cx="210" cy="255" r="4" fill="#0ea5e9"/>
+  <text x="220" y="258" font-family="Arial, sans-serif" font-size="7" fill="#0c4a6e">Figma</text>
+  <circle cx="210" cy="265" r="4" fill="#0ea5e9"/>
+  <text x="220" y="268" font-family="Arial, sans-serif" font-size="7" fill="#0c4a6e">Adobe XD</text>
+  <circle cx="270" cy="255" r="4" fill="#0ea5e9"/>
+  <text x="280" y="258" font-family="Arial, sans-serif" font-size="7" fill="#0c4a6e">Miro</text>
+  <circle cx="270" cy="265" r="4" fill="#0ea5e9"/>
+  <text x="280" y="268" font-family="Arial, sans-serif" font-size="7" fill="#0c4a6e">Principle</text>
+  
+  <text x="200" y="15" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#1f2937" text-anchor="middle">Design Process & User Research</text>
+</svg>

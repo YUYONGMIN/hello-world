@@ -1,0 +1,30 @@
+<svg width="280" height="280" viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="140" cy="140" r="140" fill="url(#profileGradient)"/>
+  
+  <!-- Person silhouette -->
+  <circle cx="140" cy="110" r="35" fill="white" opacity="0.9"/>
+  <path d="M 85 220 Q 85 180 140 180 Q 195 180 195 220 L 195 280 L 85 280 Z" fill="white" opacity="0.9"/>
+  
+  <!-- Decorative elements -->
+  <circle cx="100" cy="80" r="8" fill="white" opacity="0.6"/>
+  <circle cx="200" cy="60" r="6" fill="white" opacity="0.4"/>
+  <circle cx="220" cy="120" r="10" fill="white" opacity="0.5"/>
+  <circle cx="60" cy="150" r="5" fill="white" opacity="0.3"/>
+  <circle cx="80" cy="200" r="7" fill="white" opacity="0.4"/>
+  <circle cx="210" cy="190" r="9" fill="white" opacity="0.3"/>
+  
+  <!-- Geometric shapes -->
+  <rect x="50" y="50" width="15" height="15" rx="3" fill="white" opacity="0.2" transform="rotate(45 57.5 57.5)"/>
+  <polygon points="230,100 240,110 230,120 220,110" fill="white" opacity="0.3"/>
+  <rect x="200" y="200" width="20" height="20" rx="4" fill="white" opacity="0.2"/>
+  
+  <!-- Gradient definition -->
+  <defs>
+    <linearGradient id="profileGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>

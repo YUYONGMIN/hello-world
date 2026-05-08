@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | あなたの名前</title>
+    <meta name="description" content="作品ポートフォリオサイト">
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <!-- ヘッダーナビゲーション -->
+    <header>
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <a href="#home">Portfolio</a>
+                </div>
+                <ul class="nav-menu" id="nav-menu">
+                    <li class="nav-item">
+                        <a href="#home" class="nav-link">ホーム</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#3d-gallery" class="nav-link">3D Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#works" class="nav-link">作品</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#about" class="nav-link">プロフィール</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#contact" class="nav-link">お問い合わせ</a>
+                    </li>
+                </ul>
+                <div class="nav-toggle" id="nav-toggle">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main>
+        <!-- ホームセクション -->
+        <section id="home" class="section hero">
+            <div class="container">
+                <div class="hero-wrapper">
+                    <div class="hero-content">
+                        <h1 class="hero-title">ユヨンミン</h1>
+                        <p class="hero-description">
+                            シンプルで美しいデザインを通じて、<br>
+                            ユーザーにとって価値のある体験を作り出します。
+                        </p>
+                        <a href="#works" class="btn btn-primary">作品を見る</a>
+                    </div>
+                    <div class="hero-image">
+                        <img src="images/サムネイル.jpg" alt="作品サムネイル" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3Dギャラリーセクション -->
+        <section id="3d-gallery" class="section gallery-3d">
+            <div class="container">
+                <h2 class="section-title">3D Gallery</h2>
+                <p class="gallery-description">
+                    マウスをドラッグして視点を変更、WASD・矢印キーで移動できます。作品をクリックすると詳細が表示されます。
+                </p>
+                <div class="gallery-3d-container">
+                    <canvas id="gallery-canvas"></canvas>
+                    <div class="gallery-controls">
+                        <div class="control-buttons">
+                            <button id="reset-camera" class="btn btn-secondary">カメラリセット</button>
+                            <div class="keyboard-help">
+                                <span>移動: WASD / ↑↓←→</span>
+                                <span>視点: マウスドラッグ</span>
+                            </div>
+                        </div>
+                        <div class="gallery-info">
+                            <span id="work-info">作品にカーソルを合わせてください</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 作品セクション -->
+        <section id="works" class="section works">
+            <div class="container">
+                <h2 class="section-title">Works</h2>
+                <div class="works-grid">
+                    <!-- 作品カード1 -->
+                    <article class="work-card">
+                        <div class="work-image">
+                            <img src="images/サムネイル.jpg" alt="作品1のサムネイル" loading="lazy">
+                            <div class="work-overlay">
+                                <a href="work-detail.html?id=1" class="work-link">詳細を見る</a>
+                            </div>
+                        </div>
+                        <div class="work-info">
+                            <h3 class="work-title">Webサイトリニューアル</h3>
+                            <p class="work-category">Web Design</p>
+                            <p class="work-description">
+                                企業サイトのリニューアルプロジェクト。ユーザビリティを向上させ、モダンなデザインに刷新しました。
+                            </p>
+                        </div>
+                    </article>
+
+                    <!-- 作品カード2 -->
+                    <article class="work-card">
+                        <div class="work-image">
+                            <img src="images/サムネイル.pdf" alt="作品2のサムネイル" loading="lazy">
+                            <div class="work-overlay">
+                                <a href="work-detail.html?id=2" class="work-link">詳細を見る</a>
+                            </div>
+                        </div>
+                        <div class="work-info">
+                            <h3 class="work-title">ECサイト構築</h3>
+                            <p class="work-category">Web Development</p>
+                            <p class="work-description">
+                                オンラインストアの構築。レスポンシブ対応とユーザーフレンドリーな購入フローを実装しました。
+                            </p>
+                        </div>
+                    </article>
+
+                    <!-- 作品カード3 -->
+                    <article class="work-card">
+                        <div class="work-image">
+                            <img src="images/サムネイル.pdf" alt="作品3のサムネイル" loading="lazy">
+                            <div class="work-overlay">
+                                <a href="work-detail.html?id=3" class="work-link">詳細を見る</a>
+                            </div>
+                        </div>
+                        <div class="work-info">
+                            <h3 class="work-title">モバイルアプリUI</h3>
+                            <p class="work-category">UI/UX Design</p>
+                            <p class="work-description">
+                                iOS・Android向けアプリのUIデザイン。直感的な操作性を重視したインターフェースを設計しました。
+                            </p>
+                        </div>
+                    </article>
+
+                    <!-- 作品カード4 -->
+                    <article class="work-card">
+                        <div class="work-image">
+                            <img src="images/サムネイル.pdf" alt="作品4のサムネイル" loading="lazy">
+                            <div class="work-overlay">
+                                <a href="work-detail.html?id=4" class="work-link">詳細を見る</a>
+                            </div>
+                        </div>
+                        <div class="work-info">
+                            <h3 class="work-title">ブランドアイデンティティ</h3>
+                            <p class="work-category">Branding</p>
+                            <p class="work-description">
+                                スタートアップ企業のロゴ・VI制作。シンプルで記憶に残るブランドアイデンティティを構築しました。
+                            </p>
+                        </div>
+                    </article>
+
+                    <!-- 作品カード5 -->
+                    <article class="work-card">
+                        <div class="work-image">
+                            <img src="images/サムネイル.pdf" alt="作品5のサムネイル" loading="lazy">
+                            <div class="work-overlay">
+                                <a href="work-detail.html?id=5" class="work-link">詳細を見る</a>
+                            </div>
+                        </div>
+                        <div class="work-info">
+                            <h3 class="work-title">ランディングページ</h3>
+                            <p class="work-category">Web Design</p>
+                            <p class="work-description">
+                                新サービスのLP制作。CVR向上を目的とした効果的なレイアウトとコピーを設計しました。
+                            </p>
+                        </div>
+                    </article>
+
+                    <!-- 作品カード6 -->
+                    <article class="work-card">
+                        <div class="work-image">
+                            <img src="images/サムネイル.pdf" alt="作品6のサムネイル" loading="lazy">
+                            <div class="work-overlay">
+                                <a href="work-detail.html?id=6" class="work-link">詳細を見る</a>
+                            </div>
+                        </div>
+                        <div class="work-info">
+                            <h3 class="work-title">Webアプリケーション</h3>
+                            <p class="work-category">Web Development</p>
+                            <p class="work-description">
+                                業務効率化のためのWebアプリ開発。使いやすいインターフェースとパフォーマンスを重視しました。
+                            </p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- プロフィールセクション -->
+        <section id="about" class="section about">
+            <div class="container">
+                <h2 class="section-title">About</h2>
+                <div class="about-content">
+                    <div class="about-image">
+                        <img src="images/profile.svg" alt="プロフィール画像" loading="lazy">
+                    </div>
+                    <div class="about-text">
+                        <h3 class="about-name">ユヨンミン</h3>
+                        <p class="about-name-en">YU YONGMIN</p>
+                        <p class="about-description">
+                            デザインと開発の両面から、ユーザーにとって価値のあるWebサイトやアプリケーションを制作しています。
+                            シンプルで美しいデザインと、使いやすさを重視したユーザーエクスペリエンスの提供を心がけています。
+                        </p>
+                        <p class="about-description">
+                            HTML/CSS、JavaScript、React、Vue.jsなどのフロントエンド技術を中心に、
+                            UI/UXデザインからコーディングまで幅広くカバーしています。
+                        </p>
+                        
+                        <!-- スキル -->
+                        <div class="skills">
+                            <h4 class="skills-title">Skills</h4>
+                            <ul class="skills-list">
+                                <li class="skill-item">Photoshop</li>
+                                <li class="skill-item">Illustrator</li>
+                                <li class="skill-item">Fusion360</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- お問い合わせセクション -->
+        <section id="contact" class="section contact">
+            <div class="container">
+                <h2 class="section-title">Contact</h2>
+                <div class="contact-simple">
+                    <p class="contact-description">
+                        お仕事のご相談やご質問がございましたら、お気軽にご連絡ください。
+                    </p>
+                    <div class="contact-info-center">
+                        <div class="contact-method-simple">
+                            <h3>Email</h3>
+                            <p><a href="mailto:y-yu2278@st.kyoto-art.ac.jp">y-yu2278@st.kyoto-art.ac.jp</a></p>
+                        </div>
+                        <div class="contact-method-simple">
+                            <h3>携帯番号</h3>
+                            <p><a href="tel:090-6754-3370">090-6754-3370</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">&copy; 2026 ユヨンミン (YU YONGMIN). All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Three.js ライブラリ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script src="js/3d-gallery.js"></script>
+</body>
+</html>

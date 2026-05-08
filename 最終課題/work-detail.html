@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作品詳細 | Portfolio</title>
+    <meta name="description" content="作品詳細ページ">
+    <link rel="stylesheet" href="styles/style.css">
+    <style>
+        /* 作品詳細ページ専用スタイル */
+        .work-detail {
+            padding: 2rem 0;
+            margin-top: 80px;
+        }
+        
+        .detail-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .detail-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .detail-category {
+            color: var(--primary-color);
+            font-size: 1.125rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .detail-hero-image {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .detail-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .detail-main {
+            line-height: 1.8;
+        }
+        
+        .detail-main h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+        
+        .detail-main p {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+        
+        .detail-sidebar {
+            background-color: var(--bg-light);
+            padding: 2rem;
+            border-radius: 12px;
+            height: fit-content;
+            position: sticky;
+            top: 120px;
+        }
+        
+        .detail-info h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .detail-info-item {
+            margin-bottom: 1.5rem;
+        }
+        
+        .detail-info-label {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+            font-size: 0.875rem;
+        }
+        
+        .detail-info-value {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .tech-tag {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .detail-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .detail-image {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: var(--transition);
+            margin-bottom: 2rem;
+        }
+        
+        .back-button:hover {
+            color: var(--primary-color);
+        }
+        
+        .next-prev-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .nav-item {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .nav-item:hover {
+            color: var(--primary-color);
+        }
+        
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            .detail-title {
+                font-size: 1.875rem;
+            }
+            
+            .detail-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .detail-sidebar {
+                position: static;
+            }
+            
+            .detail-images {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .next-prev-nav {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ヘッダーナビゲーション -->
+    <header>
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <a href="index.html">Portfolio</a>
+                </div>
+                <ul class="nav-menu" id="nav-menu">
+                    <li class="nav-item">
+                        <a href="index.html#home" class="nav-link">ホーム</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#works" class="nav-link">作品</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#about" class="nav-link">プロフィール</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#contact" class="nav-link">お問い合わせ</a>
+                    </li>
+                </ul>
+                <div class="nav-toggle" id="nav-toggle">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="work-detail">
+        <div class="container">
+            <a href="index.html#works" class="back-button">
+                ← 作品一覧に戻る
+            </a>
+            
+            <div class="detail-header">
+                <h1 class="detail-title" id="work-title">作品タイトル</h1>
+                <p class="detail-category" id="work-category">カテゴリー</p>
+            </div>
+            
+            <img src="images/サムネイル.jpg" alt="作品メイン画像" class="detail-hero-image" id="work-hero-image">
+            
+            <div class="detail-content">
+                <div class="detail-main" id="work-content">
+                    <h3>プロジェクト概要</h3>
+                    <p>
+                        こちらは作品の詳細説明です。プロジェクトの背景、目的、課題、解決アプローチなどを詳しく説明します。
+                        この作品を通じて達成したかった目標や、制作過程で工夫した点などを具体的に記載します。
+                    </p>
+                    
+                    <h3>制作背景・課題</h3>
+                    <p>
+                        なぜこの作品を制作することになったのか、どのような課題があったのかを説明します。
+                        クライアントの要望や、解決すべき問題点を明確に示すことで、
+                        作品の価値と必要性を伝えます。
+                    </p>
+                    
+                    <h3>解決アプローチ・制作プロセス</h3>
+                    <p>
+                        課題に対してどのようなアプローチを取ったか、制作プロセスを時系列で説明します。
+                        リサーチ、企画、デザイン、開発、テストといった各段階での取り組みや工夫点を詳述します。
+                    </p>
+                    
+                    <h3>成果・学び</h3>
+                    <p>
+                        プロジェクトの成果や達成できた目標について説明します。
+                        数値的な成果がある場合は具体的に示し、制作を通じて得られた学びや
+                        今後の展望についても言及します。
+                    </p>
+                </div>
+                
+                <div class="detail-sidebar">
+                    <div class="detail-info">
+                        <h4>作品情報</h4>
+                        
+                        <div class="detail-info-item">
+                            <div class="detail-info-label">制作期間</div>
+                            <div class="detail-info-value" id="work-duration">2023年4月 - 2023年6月</div>
+                        </div>
+                        
+
+                        
+                        <div class="detail-info-item">
+                            <div class="detail-info-label">使用技術</div>
+                            <div class="tech-stack" id="work-tech">
+                                <span class="tech-tag">HTML</span>
+                                <span class="tech-tag">CSS</span>
+                                <span class="tech-tag">JavaScript</span>
+                                <span class="tech-tag">React</span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-info-item">
+                            <div class="detail-info-label">ツール/機器</div>
+                            <div class="detail-info-value" id="work-tools">Figma, VS Code, Git</div>
+                        </div>
+                        
+
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 追加画像 -->
+            <div class="detail-images">
+                <img src="images/work1-detail1.svg" alt="作品詳細画像1" class="detail-image">
+                <img src="images/work1-detail2.svg" alt="作品詳細画像2" class="detail-image">
+                <img src="images/work1-detail3.svg" alt="作品詳細画像3" class="detail-image">
+            </div>
+            
+            <!-- 前後ナビゲーション -->
+            <nav class="next-prev-nav">
+                <a href="work-detail.html?id=6" class="nav-item">← 前の作品</a>
+                <a href="work-detail.html?id=2" class="nav-item">次の作品 →</a>
+            </nav>
+        </div>
+    </main>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">&copy; 2026 あなたの名前. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script>
+        // 作品データ
+        const worksData = {
+            1: {
+                title: "Webサイトリニューアル",
+                category: "Web Design",
+                heroImage: "images/サムネイル.jpg",
+                duration: "2023年4月 - 2023年6月",
+
+                tech: ["HTML", "CSS", "JavaScript", "Sass"],
+                tools: "Figma, VS Code, Git",
+                content: `
+                    <h3>プロジェクト概要</h3>
+                    <p>
+                        企業サイトのリニューアルプロジェクト。既存サイトのユーザビリティ向上と
+                        ブランドイメージの刷新を目的として制作しました。モダンなデザインと
+                        直感的な操作性を実現し、コンバージョン率の改善を目指しました。
+                    </p>
+                    
+                    <h3>制作背景・課題</h3>
+                    <p>
+                        既存サイトは10年前のデザインで、モバイル対応が不十分でした。
+                        また、情報が整理されておらず、ユーザーが求める情報にたどり着きにくい
+                        構造になっていました。新しい企業イメージに合わせたブランディングも
+                        課題となっていました。
+                    </p>
+                    
+                    <h3>解決アプローチ・制作プロセス</h3>
+                    <p>
+                        まずユーザーインタビューと既存サイトの分析を行い、課題を明確化しました。
+                        その後、情報設計から始まり、ワイヤーフレーム、デザインカンプ、
+                        プロトタイピングと段階的に制作を進めました。レスポンシブデザインを
+                        前提とし、モバイルファーストで設計しました。
+                    </p>
+                    
+                    <h3>成果・学び</h3>
+                    <p>
+                        リニューアル後、セッション継続時間が40%改善し、お問い合わせ数が
+                        25%増加しました。クライアントからも高い評価をいただき、
+                        ブランドイメージの向上に貢献できました。
+                    </p>
+                `
+            },
+            2: {
+                title: "ECサイト構築",
+                category: "Web Development",
+                heroImage: "images/サムネイル.pdf",
+                duration: "2023年7月 - 2023年9月",
+                tech: ["React", "Node.js", "MongoDB", "Stripe"],
+                tools: "VS Code, Git, Docker",
+                content: `
+                    <h3>プロジェクト概要</h3>
+                    <p>
+                        オンラインストアの構築プロジェクト。商品管理から決済処理まで
+                        一貫したECサイトシステムを開発しました。ユーザーフレンドリーな
+                        インターフェースと安全な決済システムを実装しています。
+                    </p>
+                `
+            }
+            // 他の作品データも同様に追加
+        };
+
+        // URLパラメータから作品IDを取得
+        function getWorkId() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id') || '1';
+        }
+
+        // 作品詳細を表示
+        function displayWorkDetail() {
+            const workId = getWorkId();
+            const work = worksData[workId];
+            
+            if (work) {
+                document.getElementById('work-title').textContent = work.title;
+                document.getElementById('work-category').textContent = work.category;
+                document.getElementById('work-hero-image').src = work.heroImage;
+                document.getElementById('work-hero-image').alt = work.title + 'のメイン画像';
+                document.getElementById('work-duration').textContent = work.duration;
+                document.getElementById('work-tools').textContent = work.tools;
+                document.getElementById('work-content').innerHTML = work.content;
+                
+                // 技術タグを更新
+                const techContainer = document.getElementById('work-tech');
+                techContainer.innerHTML = '';
+                work.tech.forEach(tech => {
+                    const tag = document.createElement('span');
+                    tag.className = 'tech-tag';
+                    tag.textContent = tech;
+                    techContainer.appendChild(tag);
+                });
+                
+                // ページタイトルを更新
+                document.title = work.title + ' | Portfolio';
+            }
+        }
+
+        // ページロード時に実行
+        document.addEventListener('DOMContentLoaded', displayWorkDetail);
+    </script>
+</body>
+</html>
