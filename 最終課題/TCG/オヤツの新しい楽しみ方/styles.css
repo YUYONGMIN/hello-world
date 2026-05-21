@@ -1060,3 +1060,199 @@ html {
         display: none !important;
     }
 }
+
+/* Fortune Cookie Special Effects */
+.fortune-cookie .fortune-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: all 0.4s ease;
+    z-index: 10;
+}
+
+.fortune-cookie .message-text {
+    background: linear-gradient(45deg, #FFD700, #FFA500);
+    color: #8B4513;
+    padding: 8px 16px;
+    border-radius: 15px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+    white-space: nowrap;
+}
+
+.fortune-cookie:hover .fortune-message {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.fortune-cookie:hover .card-front-image {
+    transform: scale(0.9);
+    filter: brightness(0.8);
+}
+
+/* Fue Ramune Musical Effects */
+.fue-ramune .music-notes {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.fue-ramune .note {
+    display: inline-block;
+    color: #4A90E2;
+    font-size: 1.5rem;
+    margin: 0 5px;
+    animation: none;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.fue-ramune:hover .music-notes {
+    opacity: 1;
+}
+
+.fue-ramune:hover .note:nth-child(1) {
+    animation: float 1s infinite ease-in-out;
+}
+
+.fue-ramune:hover .note:nth-child(2) {
+    animation: float 1s infinite ease-in-out 0.2s;
+}
+
+.fue-ramune:hover .note:nth-child(3) {
+    animation: float 1s infinite ease-in-out 0.4s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+.fue-ramune:hover .card-front-image {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+/* Mentos Experiment Effects */
+.mentos-experiment .experiment-effects {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: all 0.4s ease;
+    z-index: 10;
+}
+
+.mentos-experiment .fizz-bubble {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle, #87CEEB, #4682B4);
+    border-radius: 50%;
+    opacity: 0;
+}
+
+.mentos-experiment .fizz-bubble:nth-child(1) {
+    left: 30%;
+    top: 70%;
+}
+
+.mentos-experiment .fizz-bubble:nth-child(2) {
+    left: 50%;
+    top: 60%;
+}
+
+.mentos-experiment .fizz-bubble:nth-child(3) {
+    left: 70%;
+    top: 75%;
+}
+
+.mentos-experiment .fizz-bubble:nth-child(4) {
+    left: 40%;
+    top: 50%;
+}
+
+.mentos-experiment .fizz-bubble:nth-child(5) {
+    left: 60%;
+    top: 40%;
+}
+
+.mentos-experiment .science-label {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(45deg, #FF4500, #FF8C00);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 0.8rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    box-shadow: 0 3px 10px rgba(255, 69, 0, 0.4);
+    opacity: 0;
+    transform: translateX(-50%) scale(0.8);
+    transition: all 0.3s ease 0.2s;
+}
+
+.mentos-experiment:hover .experiment-effects {
+    opacity: 1;
+}
+
+.mentos-experiment:hover .science-label {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+}
+
+.mentos-experiment:hover .fizz-bubble {
+    opacity: 1;
+    animation: bubbleRise 1.5s infinite ease-out;
+}
+
+.mentos-experiment:hover .fizz-bubble:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.mentos-experiment:hover .fizz-bubble:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.mentos-experiment:hover .fizz-bubble:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+.mentos-experiment:hover .fizz-bubble:nth-child(4) {
+    animation-delay: 0.6s;
+}
+
+.mentos-experiment:hover .fizz-bubble:nth-child(5) {
+    animation-delay: 0.8s;
+}
+
+@keyframes bubbleRise {
+    0% {
+        transform: translateY(0px) scale(0.5);
+        opacity: 0;
+    }
+    50% {
+        transform: translateY(-30px) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-60px) scale(0.3);
+        opacity: 0;
+    }
+}
+
+.mentos-experiment:hover .card-front-image {
+    transform: scale(0.95);
+    filter: brightness(0.9);
+}

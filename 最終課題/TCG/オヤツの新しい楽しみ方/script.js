@@ -150,6 +150,33 @@ const initialData = {
         newCulture: "ネット論争・SNSミーム・派閥文化",
         why: "食べるだけではなく、「自分はどちらが好きか」を共有したくなるから",
         discovery: "商品選択が個性やアイデンティティの表現になる"
+    },
+    "fortune-cookie": {
+        productName: "フォーチュンクッキー",
+        category: "感情・幸運型",
+        originalPurpose: "クッキーとして食べる",
+        userReinterpretation: "中に入った運勢やメッセージを楽しむ",
+        newCulture: "運試し文化・メッセージ共有",
+        why: "食べるだけではなく、「何が書かれているか」を楽しめるから",
+        discovery: "食べ物が運勢体験のツールになる"
+    },
+    "fue-ramune": {
+        productName: "フエラムネ",
+        category: "こだわり・挑戦型",
+        originalPurpose: "ラムネ菓子として食べる",
+        userReinterpretation: "口にくわえて笛のように音を鳴らして遊ぶ",
+        newCulture: "音遊び・友達との遊び文化",
+        why: "穴の空いた形が、食べる以外の遊び方を生み出したから",
+        discovery: "商品の形状が音遊びという新しい楽しみを創造する"
+    },
+    "mentos": {
+        productName: "メントス",
+        category: "こだわり・挑戦型",
+        originalPurpose: "キャンディとして食べる",
+        userReinterpretation: "コーラに入れて噴き出すということがネット上で有名になり、その実験を楽しむ",
+        newCulture: "実験動画・YouTubeチャレンジ・SNS投稿する文化が生まれた",
+        why: "お菓子の性質が、食べる以外の遊びや実験につながったから",
+        discovery: "食品の科学的性質が新しいエンターテイメントコンテンツを生み出す"
     }
 };
 
