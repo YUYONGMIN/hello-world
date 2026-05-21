@@ -433,8 +433,36 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="imageUrl">写真URL（任意）</label>
-                        <input type="url" id="imageUrl" name="imageUrl">
+                        <label for="imageOption">写真の添付方法</label>
+                        <div class="image-option-tabs">
+                            <button type="button" class="tab-btn active" data-tab="upload">ファイルアップロード</button>
+                            <button type="button" class="tab-btn" data-tab="url">URL入力</button>
+                        </div>
+                        
+                        <div class="tab-content active" id="upload-tab">
+                            <div class="file-upload-area">
+                                <input type="file" id="imageFile" name="imageFile" accept="image/*" hidden>
+                                <div class="upload-dropzone" id="uploadDropzone">
+                                    <div class="upload-icon">📷</div>
+                                    <p>写真をドラッグ＆ドロップ<br>または<strong>クリックして選択</strong></p>
+                                    <small>JPG, PNG, WEBP形式（最大5MB）</small>
+                                </div>
+                                <div class="uploaded-preview" id="uploadedPreview" style="display: none;">
+                                    <img id="previewImage" src="" alt="プレビュー">
+                                    <button type="button" class="remove-image-btn" id="removeImageBtn">✕</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content" id="url-tab">
+                            <input type="url" id="imageUrl" name="imageUrl" placeholder="https://example.com/image.jpg">
+                            <small class="url-help">
+                                <strong>おすすめサービス:</strong> 
+                                <a href="https://imgur.com" target="_blank">Imgur</a> / 
+                                <a href="https://postimages.org" target="_blank">Postimages</a> / 
+                                <a href="https://imgbb.com" target="_blank">ImgBB</a>
+                            </small>
+                        </div>
                     </div>
                     
                     <button type="submit" class="submit-btn">投稿する</button>

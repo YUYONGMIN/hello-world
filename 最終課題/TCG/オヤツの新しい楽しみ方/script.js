@@ -696,7 +696,103 @@ function addHoverFeedback() {
 
 document.addEventListener('DOMContentLoaded', addHoverFeedback);
 
+// File upload functionality
+function setupFileUpload() {
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    const uploadDropzone = document.getElementById('uploadDropzone');
+    const fileInput = document.getElementById('imageFile');
+    const uploadedPreview = document.getElementById('uploadedPreview');
+    const previewImage = document.getElementById('previewImage');
+    const removeImageBtn = document.getElementById('removeImageBtn');
+
+    if (!uploadDropzone) return; // Exit if elements don't exist
+
+    // Tab switching
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const targetTab = this.dataset.tab;
+            
+            // Update active tab button
+            tabBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Update active tab content
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+                if (content.id === `${targetTab}-tab`) {
+                    content.classList.add('active');
+                }
+            });
+        });
+    });
+
+    // File upload dropzone click
+    uploadDropzone.addEventListener('click', () => fileInput.click());
+
+    // Drag and drop functionality
+    uploadDropzone.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        this.classList.add('drag-over');
+    });
+
+    uploadDropzone.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        this.classList.remove('drag-over');
+    });
+
+    uploadDropzone.addEventListener('drop', function(e) {
+        e.preventDefault();
+        this.classList.remove('drag-over');
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            handleFileUpload(files[0]);
+        }
+    });
+
+    // File input change
+    fileInput.addEventListener('change', function(e) {
+        if (this.files && this.files[0]) {
+            handleFileUpload(this.files[0]);
+        }
+    });
+
+    // Remove image button
+    removeImageBtn.addEventListener('click', function() {
+        fileInput.value = '';
+        uploadedPreview.style.display = 'none';
+        uploadDropzone.style.display = 'block';
+    });
+
+    function handleFileUpload(file) {
+        // Validate file type
+        if (!file.type.startsWith('image/')) {
+            alert('画像ファイルを選択してください。');
+            return;
+        }
+
+        // Validate file size (5MB limit)
+        if (file.size > 5 * 1024 * 1024) {
+            alert('ファイルサイズは5MB以下にしてください。');
+            return;
+        }
+
+        // Create file reader
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            previewImage.src = e.target.result;
+            uploadDropzone.style.display = 'none';
+            uploadedPreview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+// Initialize file upload on page load
+document.addEventListener('DOMContentLoaded', setupFileUpload);
+
 console.log('🍭 食べるだけじゃない - Internet Culture Archive loaded successfully!');
 console.log('🎮 Interactive elements: Tags, Previews, Scroll indicator');
 console.log('📱 Responsive design: Mobile optimized');
 console.log('🎨 Animations: Floating, Parallax, Hover effects');
+console.log('📷 File upload: Drag & drop, preview functionality');
