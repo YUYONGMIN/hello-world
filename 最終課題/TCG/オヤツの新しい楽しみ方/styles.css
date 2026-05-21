@@ -1386,3 +1386,36 @@ html {
 .url-help a:hover {
     text-decoration: underline;
 }
+
+/* Archive Card Image Styles */
+.archive-card-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 8px 8px 0 0;
+    background: #f8f9fa;
+}
+
+.archive-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.archive-card:hover .archive-card-image img {
+    transform: scale(1.05);
+}
+
+.archive-card-timestamp {
+    color: #666;
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #eee;
+}
+
+/* Archive card without image adjustments */
+.archive-card:not(:has(.archive-card-image)) .archive-card-header {
+    border-radius: 8px 8px 0 0;
+}

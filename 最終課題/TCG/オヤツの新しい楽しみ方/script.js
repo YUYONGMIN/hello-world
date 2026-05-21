@@ -225,11 +225,29 @@ const categoryNames = {
     "emotion-luck": "感情・幸運型"
 };
 
-// User posts storage
-let userPosts = [...samplePosts];
+// User posts storage - Load from localStorage or use sample data
+let userPosts = [];
+
+// Load user submissions from localStorage
+function loadUserSubmissions() {
+    try {
+        const savedSubmissions = localStorage.getItem('userSubmissions');
+        if (savedSubmissions) {
+            const parsedSubmissions = JSON.parse(savedSubmissions);
+            userPosts = parsedSubmissions;
+        } else {
+            // Use sample data if no saved submissions
+            userPosts = [...samplePosts];
+        }
+    } catch (error) {
+        console.error('Failed to load user submissions:', error);
+        userPosts = [...samplePosts];
+    }
+}
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
+    loadUserSubmissions(); // Load data from localStorage first
     setupCardClickEvents();
     setupModalEvents();
     setupFormSubmission();
@@ -309,31 +327,88 @@ function setupFormSubmission() {
         e.preventDefault();
         
         const formData = new FormData(this);
-        const newPost = {
-            productName: formData.get('productName'),
-            originalPurpose: formData.get('originalPurpose'),
-            userReinterpretation: formData.get('userReinterpretation'),
-            why: formData.get('why'),
-            category: formData.get('category'),
-            categoryName: categoryNames[formData.get('category')],
-            imageUrl: formData.get('imageUrl') || ''
-        };
+        const fileInput = document.getElementById('imageFile');
+        const urlInput = document.getElementById('imageUrl');
         
-        // Add to user posts
-        userPosts.unshift(newPost);
+        // Handle image data (file upload or URL)
+        let imageData = '';
+        if (fileInput.files && fileInput.files[0]) {
+            // If file is uploaded, convert to base64
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                const newPost = createPostData(formData, e.target.result);
+                saveAndDisplayPost(newPost);
+            };
+            
+            reader.readAsDataURL(file);
+            
+        } else if (urlInput.value) {
+            // If URL is provided
+            imageData = urlInput.value;
+            const newPost = createPostData(formData, imageData);
+            saveAndDisplayPost(newPost);
+            
+        } else {
+            // No image provided
+            const newPost = createPostData(formData, '');
+            saveAndDisplayPost(newPost);
+        }
         
-        // Re-render archive
-        renderArchive();
+        function createPostData(formData, imageData) {
+            return {
+                id: Date.now() + Math.random().toString(36).substr(2, 9), // Unique ID
+                productName: formData.get('productName'),
+                originalPurpose: formData.get('originalPurpose'),
+                userReinterpretation: formData.get('userReinterpretation'),
+                why: formData.get('why'),
+                category: formData.get('category'),
+                categoryName: categoryNames[formData.get('category')],
+                imageUrl: imageData,
+                timestamp: new Date().toISOString(),
+                newCulture: `${formData.get('productName')}の新しい楽しみ方として広まった文化`,
+                discovery: "ユーザーが発見した新しい価値の創造"
+            };
+        }
         
-        // Reset form
-        this.reset();
-        
-        // Show success message
-        showNotification('投稿が完了しました！');
-        
-        // Scroll to archive section
-        document.getElementById('archive').scrollIntoView({ behavior: 'smooth' });
+        function saveAndDisplayPost(newPost) {
+            // Add to user posts
+            userPosts.unshift(newPost);
+            
+            // Save to localStorage for persistence
+            localStorage.setItem('userSubmissions', JSON.stringify(userPosts));
+            
+            // Re-render archive
+            renderArchive();
+            
+            // Reset form and clear upload preview
+            document.getElementById('shareForm').reset();
+            resetFileUpload();
+            
+            // Show success message
+            showNotification('投稿が完了しました！');
+            
+            // Scroll to archive section
+            document.getElementById('archive').scrollIntoView({ behavior: 'smooth' });
+        }
     });
+}
+
+// Reset file upload state
+function resetFileUpload() {
+    const uploadDropzone = document.getElementById('uploadDropzone');
+    const uploadedPreview = document.getElementById('uploadedPreview');
+    const fileInput = document.getElementById('imageFile');
+    
+    if (uploadDropzone && uploadedPreview) {
+        uploadDropzone.style.display = 'block';
+        uploadedPreview.style.display = 'none';
+    }
+    
+    if (fileInput) {
+        fileInput.value = '';
+    }
 }
 
 // Setup filter tabs
@@ -379,7 +454,15 @@ function createArchiveCard(post, index) {
     card.className = 'archive-card';
     card.dataset.category = post.category;
     
+    // Create image section if image is available
+    const imageSection = post.imageUrl ? `
+        <div class="archive-card-image">
+            <img src="${escapeHtml(post.imageUrl)}" alt="${escapeHtml(post.productName)}" loading="lazy">
+        </div>
+    ` : '';
+    
     card.innerHTML = `
+        ${imageSection}
         <div class="archive-card-header">
             <h3 class="archive-card-title">${escapeHtml(post.productName)}</h3>
             <span class="archive-card-category">${escapeHtml(post.categoryName)}</span>
@@ -388,6 +471,7 @@ function createArchiveCard(post, index) {
             <div class="archive-card-text">
                 <strong>楽しみ方：</strong>${escapeHtml(post.userReinterpretation)}
             </div>
+            ${post.timestamp ? `<div class="archive-card-timestamp">${formatTimestamp(post.timestamp)}</div>` : ''}
         </div>
     `;
     
@@ -411,13 +495,79 @@ function createArchiveCard(post, index) {
     return card;
 }
 
+// Format timestamp for display
+function formatTimestamp(timestamp) {
+    try {
+        const date = new Date(timestamp);
+        return date.toLocaleDateString('ja-JP', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    } catch {
+        return '';
+    }
+}
+
+// Delete user post
+function deleteUserPost(postId) {
+    if (confirm('この投稿を削除しますか？')) {
+        userPosts = userPosts.filter(post => post.id !== postId);
+        localStorage.setItem('userSubmissions', JSON.stringify(userPosts));
+        renderArchive();
+        closeModal();
+        showNotification('投稿を削除しました');
+    }
+}
+
+// Clear all user posts (admin function)
+function clearAllUserPosts() {
+    if (confirm('全ての投稿を削除しますか？この操作は元に戻せません。')) {
+        userPosts = [];
+        localStorage.removeItem('userSubmissions');
+        renderArchive();
+        showNotification('全ての投稿を削除しました');
+    }
+}
+
 // Show user post modal
 function showUserPostModal(post) {
     document.getElementById('modalProductName').textContent = post.productName;
     document.getElementById('modalOriginalPurpose').textContent = post.originalPurpose;
     document.getElementById('modalUserReinterpretation').textContent = post.userReinterpretation;
-    document.getElementById('modalNewCulture').textContent = 'ユーザー投稿のため詳細情報はありません';
+    document.getElementById('modalNewCulture').textContent = post.newCulture || 'ユーザーによる新しい楽しみ方の発見';
     document.getElementById('modalWhy').textContent = post.why;
+    
+    // Handle modal image display
+    const modalImageContainer = document.querySelector('.modal-image-container');
+    const modalImage = document.getElementById('modalImage');
+    
+    if (post.imageUrl && modalImageContainer && modalImage) {
+        modalImage.src = post.imageUrl;
+        modalImage.alt = post.productName;
+        modalImageContainer.style.display = 'block';
+    } else if (modalImageContainer) {
+        modalImageContainer.style.display = 'none';
+    }
+    
+    // Add delete button for user posts (if it's a user post with ID)
+    let deleteButtonHTML = '';
+    if (post.id && post.id !== 'example-1') {
+        deleteButtonHTML = `<button class="delete-post-btn" onclick="deleteUserPost('${post.id}')" style="background: #dc3545; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-top: 1rem;">投稿を削除</button>`;
+    }
+    
+    // Add delete button to modal if it doesn't exist
+    const modalContent = document.querySelector('.modal-content');
+    const existingDeleteBtn = document.querySelector('.delete-post-btn');
+    if (existingDeleteBtn) {
+        existingDeleteBtn.remove();
+    }
+    
+    if (deleteButtonHTML) {
+        modalContent.insertAdjacentHTML('beforeend', deleteButtonHTML);
+    }
     
     modal.style.display = 'block';
     document.body.style.overflow = 'hidden';
