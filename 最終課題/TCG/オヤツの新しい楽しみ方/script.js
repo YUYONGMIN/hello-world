@@ -232,26 +232,11 @@ let firebaseListenerActive = false;
 
 // Firebase integration functions
 const FirebaseSync = {
-    // Initialize Firebase connection
+    // Initialize Firebase connection (TEMPORARILY DISABLED)
     init() {
-        if (!window.firebaseDB) {
-            console.log('Firebase not available, falling back to localStorage');
-            return false;
-        }
-        
-        try {
-            // Test Firebase connection
-            const testRef = window.firebaseDB.ref(window.firebaseDB.database, 'test');
-            window.firebaseDB.set(testRef, { timestamp: Date.now() });
-            isFirebaseConnected = true;
-            console.log('🔥 Firebase connected successfully');
-            this.setupRealtimeListener();
-            return true;
-        } catch (error) {
-            console.error('Firebase connection failed:', error);
-            isFirebaseConnected = false;
-            return false;
-        }
+        console.log('🚨 Firebase temporarily disabled for data recovery');
+        isFirebaseConnected = false;
+        return false;
     },
 
     // Setup realtime listener for posts
@@ -330,29 +315,43 @@ const FirebaseSync = {
     }
 };
 
-// Load user submissions with Firebase integration
+// Load user submissions with Firebase integration (TEMPORARILY DISABLED)
 function loadUserSubmissions() {
     try {
-        // Try to initialize Firebase
-        const firebaseAvailable = FirebaseSync.init();
+        console.log('🔧 Firebase temporarily disabled for data recovery');
         
-        if (!firebaseAvailable) {
-            // Fallback to localStorage
-            const savedSubmissions = localStorage.getItem('userSubmissions');
-            if (savedSubmissions) {
-                const parsedSubmissions = JSON.parse(savedSubmissions);
-                userPosts = parsedSubmissions;
-            } else {
-                userPosts = [...samplePosts];
-            }
-            console.log('📱 Using localStorage mode');
+        // Force localStorage mode for data recovery
+        const savedSubmissions = localStorage.getItem('userSubmissions');
+        if (savedSubmissions) {
+            const parsedSubmissions = JSON.parse(savedSubmissions);
+            userPosts = parsedSubmissions;
+            console.log('📱 Restored from localStorage:', userPosts.length, 'posts');
         } else {
-            console.log('☁️ Using Firebase realtime mode');
+            // Restore with enhanced sample data including previous posts
+            userPosts = [
+                {
+                    id: 'sample-1',
+                    productName: "チロルチョコ",
+                    originalPurpose: "一口チョコレートとして楽しむ",
+                    userReinterpretation: "包み紙のデザインを収集してコレクションする",
+                    newCulture: "チロルチョコの包み紙アート・コレクション文化",
+                    why: "多様なデザインが収集欲をそそり、アート的価値を見出したから",
+                    categoryName: "発見・収集型",
+                    category: "discovery-collection",
+                    imageUrl: "",
+                    timestamp: new Date().toISOString(),
+                    discovery: "包装デザインに新しい価値を見出すコレクション文化"
+                }
+            ];
+            
+            // Save sample data to localStorage
+            localStorage.setItem('userSubmissions', JSON.stringify(userPosts));
+            console.log('📱 Created sample data for recovery');
         }
         
     } catch (error) {
         console.error('Failed to load user submissions:', error);
-        userPosts = [...samplePosts];
+        userPosts = [];
     }
 }
 
@@ -486,40 +485,23 @@ function setupFormSubmission() {
             };
         }
         
-        async function saveAndDisplayPost(newPost) {
-            try {
-                // Try to save to Firebase first
-                if (isFirebaseConnected) {
-                    const firebaseKey = await FirebaseSync.savePost(newPost);
-                    newPost.firebaseKey = firebaseKey;
-                    showSyncNotification('☁️ リアルタイム同期中...', 'info');
-                } else {
-                    // Fallback to localStorage
-                    userPosts.unshift(newPost);
-                    localStorage.setItem('userSubmissions', JSON.stringify(userPosts));
-                    renderArchive();
-                    showSyncNotification('📱 ローカルに保存されました', 'warning');
-                }
-                
-                // Reset form and clear upload preview
-                document.getElementById('shareForm').reset();
-                resetFileUpload();
-                
-                // Show success message
-                showNotification('投稿が完了しました！');
-                
-                // Scroll to archive section
-                document.getElementById('archive').scrollIntoView({ behavior: 'smooth' });
-                
-            } catch (error) {
-                console.error('Save failed:', error);
-                // Fallback to localStorage on Firebase failure
-                userPosts.unshift(newPost);
-                localStorage.setItem('userSubmissions', JSON.stringify(userPosts));
-                renderArchive();
-                
-                showNotification('投稿は保存されましたが、同期に失敗しました', true);
-            }
+        function saveAndDisplayPost(newPost) {
+            // Save to localStorage (Firebase disabled for recovery)
+            userPosts.unshift(newPost);
+            localStorage.setItem('userSubmissions', JSON.stringify(userPosts));
+            
+            // Re-render archive
+            renderArchive();
+            
+            // Reset form and clear upload preview
+            document.getElementById('shareForm').reset();
+            resetFileUpload();
+            
+            // Show success message
+            showNotification('投稿が完了しました！');
+            
+            // Scroll to archive section
+            document.getElementById('archive').scrollIntoView({ behavior: 'smooth' });
         }
     });
 }
@@ -641,49 +623,23 @@ function formatTimestamp(timestamp) {
 }
 
 // Delete user post
-async function deleteUserPost(postId) {
+function deleteUserPost(postId) {
     if (confirm('この投稿を削除しますか？')) {
-        try {
-            const post = userPosts.find(p => p.id === postId);
-            
-            if (isFirebaseConnected && post?.firebaseKey) {
-                await FirebaseSync.deletePost(post.firebaseKey);
-                showSyncNotification('☁️ クラウドから削除中...', 'info');
-            } else {
-                userPosts = userPosts.filter(post => post.id !== postId);
-                localStorage.setItem('userSubmissions', JSON.stringify(userPosts));
-                renderArchive();
-            }
-            
-            closeModal();
-            showNotification('投稿を削除しました');
-            
-        } catch (error) {
-            console.error('Delete failed:', error);
-            showNotification('削除に失敗しました', true);
-        }
+        userPosts = userPosts.filter(post => post.id !== postId);
+        localStorage.setItem('userSubmissions', JSON.stringify(userPosts));
+        renderArchive();
+        closeModal();
+        showNotification('投稿を削除しました');
     }
 }
 
 // Clear all user posts (admin function)
-async function clearAllUserPosts() {
+function clearAllUserPosts() {
     if (confirm('全ての投稿を削除しますか？この操作は元に戻せません。')) {
-        try {
-            if (isFirebaseConnected) {
-                await FirebaseSync.clearAllPosts();
-                showSyncNotification('☁️ 全てのデータを削除中...', 'info');
-            } else {
-                userPosts = [];
-                localStorage.removeItem('userSubmissions');
-                renderArchive();
-            }
-            
-            showNotification('全ての投稿を削除しました');
-            
-        } catch (error) {
-            console.error('Clear all failed:', error);
-            showNotification('削除に失敗しました', true);
-        }
+        userPosts = [];
+        localStorage.removeItem('userSubmissions');
+        renderArchive();
+        showNotification('全ての投稿を削除しました');
     }
 }
 
@@ -812,10 +768,32 @@ function showSyncNotification(message, type = 'info') {
 
 // Update sync status display
 function updateSyncStatus() {
-    if (isFirebaseConnected) {
-        showSyncNotification('☁️ リアルタイム同期中', 'success');
-    } else {
-        showSyncNotification('📱 ローカルモード（同期なし）', 'warning');
+    showSyncNotification('📱 ローカルモード（データ復旧中）', 'warning');
+}
+
+// Recovery function to restore sample data
+function recoverSampleData() {
+    if (confirm('サンプルデータを復旧しますか？既存のデータは保持されます。')) {
+        const sampleData = {
+            id: 'sample-recovery-' + Date.now(),
+            productName: "チロルチョコ",
+            originalPurpose: "一口チョコレートとして楽しむ",
+            userReinterpretation: "包み紙のデザインを収集してコレクションする",
+            newCulture: "チロルチョコの包み紙アート・コレクション文化",
+            why: "多様なデザインが収集欲をそそり、アート的価値を見出したから",
+            categoryName: "発見・収集型",
+            category: "discovery-collection",
+            imageUrl: "",
+            timestamp: new Date().toISOString(),
+            discovery: "包装デザインに新しい価値を見出すコレクション文化"
+        };
+        
+        // Add to existing posts (don't replace)
+        userPosts.unshift(sampleData);
+        localStorage.setItem('userSubmissions', JSON.stringify(userPosts));
+        renderArchive();
+        
+        showNotification('サンプルデータを復旧しました！');
     }
 }
 
