@@ -366,8 +366,8 @@ document.addEventListener('DOMContentLoaded', function() {
     setupSmoothScrolling();
     setupScrollIndicator();
     
-    // Update sync status after a brief delay to allow Firebase to initialize
-    setTimeout(updateSyncStatus, 1000);
+    // Sync status display disabled per user request
+    // setTimeout(updateSyncStatus, 1000);
 });
 
 // Setup card click events
@@ -766,9 +766,10 @@ function showSyncNotification(message, type = 'info') {
     }
 }
 
-// Update sync status display
+// Update sync status display (Disabled)
 function updateSyncStatus() {
-    showSyncNotification('📱 ローカルモード（データ復旧中）', 'warning');
+    // Status display disabled per user request
+    return;
 }
 
 // Recovery function to restore sample data
