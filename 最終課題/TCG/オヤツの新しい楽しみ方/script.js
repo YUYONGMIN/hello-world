@@ -532,6 +532,139 @@ function clearAllUserPosts() {
     }
 }
 
+// Export user data to JSON file
+function exportUserData() {
+    try {
+        const exportData = {
+            version: "1.0",
+            exportDate: new Date().toISOString(),
+            userPosts: userPosts,
+            totalPosts: userPosts.length
+        };
+        
+        const dataStr = JSON.stringify(exportData, null, 2);
+        const dataBlob = new Blob([dataStr], { type: 'application/json' });
+        
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(dataBlob);
+        link.download = `oyatsu-archive-${new Date().toISOString().split('T')[0]}.json`;
+        
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        showNotification(`${userPosts.length}件の投稿をエクスポートしました`);
+        
+    } catch (error) {
+        console.error('Export failed:', error);
+        showNotification('エクスポートに失敗しました', true);
+    }
+}
+
+// Import user data from JSON file
+function importUserData(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const importData = JSON.parse(e.target.result);
+            
+            // Validate import data structure
+            if (!importData.userPosts || !Array.isArray(importData.userPosts)) {
+                throw new Error('Invalid data format');
+            }
+            
+            // Show confirmation dialog
+            const confirmMessage = `${importData.userPosts.length}件の投稿をインポートしますか？\n\n既存のデータは置き換えられます。`;
+            if (!confirm(confirmMessage)) {
+                event.target.value = ''; // Reset file input
+                return;
+            }
+            
+            // Validate each post has required fields
+            const validPosts = importData.userPosts.filter(post => {
+                return post.productName && post.userReinterpretation && post.category;
+            });
+            
+            // Ensure each post has unique ID
+            validPosts.forEach(post => {
+                if (!post.id) {
+                    post.id = Date.now() + Math.random().toString(36).substr(2, 9);
+                }
+                if (!post.timestamp) {
+                    post.timestamp = new Date().toISOString();
+                }
+            });
+            
+            // Replace current data
+            userPosts = validPosts;
+            localStorage.setItem('userSubmissions', JSON.stringify(userPosts));
+            renderArchive();
+            
+            showNotification(`${validPosts.length}件の投稿をインポートしました`);
+            
+        } catch (error) {
+            console.error('Import failed:', error);
+            showNotification('インポートに失敗しました。ファイル形式を確認してください。', true);
+        }
+        
+        // Reset file input
+        event.target.value = '';
+    };
+    
+    reader.readAsText(file);
+}
+
+// Show notification with optional error styling
+function showNotification(message, isError = false) {
+    // Remove existing notification
+    const existingNotification = document.querySelector('.notification');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+    
+    const notification = document.createElement('div');
+    notification.className = `notification ${isError ? 'error' : 'success'}`;
+    notification.textContent = message;
+    
+    // Style the notification
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        color: white;
+        font-weight: 500;
+        z-index: 10000;
+        max-width: 400px;
+        word-wrap: break-word;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        background: ${isError ? '#dc3545' : '#28a745'};
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+    
+    // Animate out and remove
+    setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.remove();
+            }
+        }, 300);
+    }, 3000);
+}
+
 // Show user post modal
 function showUserPostModal(post) {
     document.getElementById('modalProductName').textContent = post.productName;
@@ -607,43 +740,7 @@ function escapeHtml(text) {
     return text.replace(/[&<>"']/g, function(m) { return map[m]; });
 }
 
-// Show notification
-function showNotification(message) {
-    // Create notification element
-    const notification = document.createElement('div');
-    notification.style.cssText = `
-        position: fixed;
-        top: 100px;
-        right: 20px;
-        background: #4ECDC4;
-        color: white;
-        padding: 1rem 2rem;
-        border-radius: 10px;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-        z-index: 3000;
-        transform: translateX(400px);
-        transition: transform 0.3s ease;
-        font-weight: 500;
-    `;
-    notification.textContent = message;
-    
-    document.body.appendChild(notification);
-    
-    // Animate in
-    setTimeout(() => {
-        notification.style.transform = 'translateX(0)';
-    }, 100);
-    
-    // Remove after 3 seconds
-    setTimeout(() => {
-        notification.style.transform = 'translateX(400px)';
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.parentNode.removeChild(notification);
-            }
-        }, 300);
-    }, 3000);
-}
+// Note: showNotification function is defined above with error support
 
 // Header remains visible at all times
 const header = document.querySelector('.header');

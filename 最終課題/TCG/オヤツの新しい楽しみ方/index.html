@@ -476,6 +476,25 @@
                 <h2 class="section-title">みんなの楽しみ方</h2>
                 <p class="section-subtitle">人々によって生まれた、新しい楽しみ方のアーカイブ</p>
                 
+                <!-- Data Management Controls -->
+                <div class="data-management">
+                    <div class="data-management-buttons">
+                        <button class="export-btn" onclick="exportUserData()">
+                            📦 データをエクスポート
+                        </button>
+                        <label class="import-btn" for="importFile">
+                            📥 データをインポート
+                            <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importUserData(event)">
+                        </label>
+                        <button class="clear-btn" onclick="clearAllUserPosts()" style="background: #dc3545;">
+                            🗑️ 全データ削除
+                        </button>
+                    </div>
+                    <p class="data-info">
+                        <strong>💡 ヒント:</strong> データをエクスポートしてJSONファイルとして保存し、他のデバイス・ブラウザでインポートできます
+                    </p>
+                </div>
+                
                  <div class="filter-tabs">
                      <button class="filter-tab active" data-filter="all">すべて</button>
                      <button class="filter-tab" data-filter="discovery-collection">発見・収集型</button>

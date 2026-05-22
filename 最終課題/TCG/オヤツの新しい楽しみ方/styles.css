@@ -1419,3 +1419,119 @@ html {
 .archive-card:not(:has(.archive-card-image)) .archive-card-header {
     border-radius: 8px 8px 0 0;
 }
+
+/* Data Management Styles */
+.data-management {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.data-management-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.export-btn, .import-btn, .clear-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.export-btn {
+    background: linear-gradient(135deg, #4A90E2, #357ABD);
+    color: white;
+    box-shadow: 0 3px 10px rgba(74, 144, 226, 0.3);
+}
+
+.export-btn:hover {
+    background: linear-gradient(135deg, #357ABD, #2968A3);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
+}
+
+.import-btn {
+    background: linear-gradient(135deg, #28a745, #218838);
+    color: white;
+    box-shadow: 0 3px 10px rgba(40, 167, 69, 0.3);
+}
+
+.import-btn:hover {
+    background: linear-gradient(135deg, #218838, #1e7e34);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+}
+
+.clear-btn {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    color: white;
+    box-shadow: 0 3px 10px rgba(220, 53, 69, 0.3);
+}
+
+.clear-btn:hover {
+    background: linear-gradient(135deg, #c82333, #a71e2a);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);
+}
+
+.data-info {
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 6px;
+    border-left: 4px solid #4A90E2;
+}
+
+/* Notification styles (enhanced) */
+.notification {
+    animation: slideIn 0.3s ease;
+}
+
+.notification.error {
+    background: linear-gradient(135deg, #dc3545, #c82333) !important;
+}
+
+.notification.success {
+    background: linear-gradient(135deg, #28a745, #218838) !important;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Mobile responsiveness for data management */
+@media (max-width: 768px) {
+    .data-management-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .export-btn, .import-btn, .clear-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
