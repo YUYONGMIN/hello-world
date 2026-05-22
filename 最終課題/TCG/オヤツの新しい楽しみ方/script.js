@@ -227,18 +227,129 @@ const categoryNames = {
 
 // User posts storage - Load from localStorage or use sample data
 let userPosts = [];
+let isFirebaseConnected = false;
+let firebaseListenerActive = false;
 
-// Load user submissions from localStorage
+// Firebase integration functions
+const FirebaseSync = {
+    // Initialize Firebase connection
+    init() {
+        if (!window.firebaseDB) {
+            console.log('Firebase not available, falling back to localStorage');
+            return false;
+        }
+        
+        try {
+            // Test Firebase connection
+            const testRef = window.firebaseDB.ref(window.firebaseDB.database, 'test');
+            window.firebaseDB.set(testRef, { timestamp: Date.now() });
+            isFirebaseConnected = true;
+            console.log('🔥 Firebase connected successfully');
+            this.setupRealtimeListener();
+            return true;
+        } catch (error) {
+            console.error('Firebase connection failed:', error);
+            isFirebaseConnected = false;
+            return false;
+        }
+    },
+
+    // Setup realtime listener for posts
+    setupRealtimeListener() {
+        if (!isFirebaseConnected || firebaseListenerActive) return;
+        
+        const postsRef = window.firebaseDB.ref(window.firebaseDB.database, 'userPosts');
+        
+        window.firebaseDB.onValue(postsRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                const firebasePosts = Object.keys(data).map(key => ({
+                    ...data[key],
+                    firebaseKey: key
+                }));
+                
+                // Only update if data is different
+                if (JSON.stringify(firebasePosts) !== JSON.stringify(userPosts)) {
+                    userPosts = firebasePosts;
+                    renderArchive();
+                    showSyncNotification('🔄 データが同期されました', 'success');
+                }
+            }
+        });
+        
+        firebaseListenerActive = true;
+        console.log('🎯 Realtime listener activated');
+    },
+
+    // Save post to Firebase
+    async savePost(post) {
+        if (!isFirebaseConnected) {
+            throw new Error('Firebase not connected');
+        }
+        
+        try {
+            const postsRef = window.firebaseDB.ref(window.firebaseDB.database, 'userPosts');
+            const newPostRef = window.firebaseDB.push(postsRef);
+            await window.firebaseDB.set(newPostRef, {
+                ...post,
+                syncedAt: new Date().toISOString()
+            });
+            
+            console.log('✅ Post saved to Firebase');
+            return newPostRef.key;
+        } catch (error) {
+            console.error('❌ Failed to save to Firebase:', error);
+            throw error;
+        }
+    },
+
+    // Delete post from Firebase
+    async deletePost(firebaseKey) {
+        if (!isFirebaseConnected || !firebaseKey) return;
+        
+        try {
+            const postRef = window.firebaseDB.ref(window.firebaseDB.database, `userPosts/${firebaseKey}`);
+            await window.firebaseDB.remove(postRef);
+            console.log('🗑️ Post deleted from Firebase');
+        } catch (error) {
+            console.error('❌ Failed to delete from Firebase:', error);
+        }
+    },
+
+    // Clear all posts from Firebase
+    async clearAllPosts() {
+        if (!isFirebaseConnected) return;
+        
+        try {
+            const postsRef = window.firebaseDB.ref(window.firebaseDB.database, 'userPosts');
+            await window.firebaseDB.remove(postsRef);
+            console.log('🧹 All posts cleared from Firebase');
+        } catch (error) {
+            console.error('❌ Failed to clear Firebase:', error);
+        }
+    }
+};
+
+// Load user submissions with Firebase integration
 function loadUserSubmissions() {
     try {
-        const savedSubmissions = localStorage.getItem('userSubmissions');
-        if (savedSubmissions) {
-            const parsedSubmissions = JSON.parse(savedSubmissions);
-            userPosts = parsedSubmissions;
+        // Try to initialize Firebase
+        const firebaseAvailable = FirebaseSync.init();
+        
+        if (!firebaseAvailable) {
+            // Fallback to localStorage
+            const savedSubmissions = localStorage.getItem('userSubmissions');
+            if (savedSubmissions) {
+                const parsedSubmissions = JSON.parse(savedSubmissions);
+                userPosts = parsedSubmissions;
+            } else {
+                userPosts = [...samplePosts];
+            }
+            console.log('📱 Using localStorage mode');
         } else {
-            // Use sample data if no saved submissions
-            userPosts = [...samplePosts];
+            console.log('☁️ Using Firebase realtime mode');
         }
+        
     } catch (error) {
         console.error('Failed to load user submissions:', error);
         userPosts = [...samplePosts];
@@ -255,6 +366,9 @@ document.addEventListener('DOMContentLoaded', function() {
     renderArchive();
     setupSmoothScrolling();
     setupScrollIndicator();
+    
+    // Update sync status after a brief delay to allow Firebase to initialize
+    setTimeout(updateSyncStatus, 1000);
 });
 
 // Setup card click events
@@ -372,25 +486,40 @@ function setupFormSubmission() {
             };
         }
         
-        function saveAndDisplayPost(newPost) {
-            // Add to user posts
-            userPosts.unshift(newPost);
-            
-            // Save to localStorage for persistence
-            localStorage.setItem('userSubmissions', JSON.stringify(userPosts));
-            
-            // Re-render archive
-            renderArchive();
-            
-            // Reset form and clear upload preview
-            document.getElementById('shareForm').reset();
-            resetFileUpload();
-            
-            // Show success message
-            showNotification('投稿が完了しました！');
-            
-            // Scroll to archive section
-            document.getElementById('archive').scrollIntoView({ behavior: 'smooth' });
+        async function saveAndDisplayPost(newPost) {
+            try {
+                // Try to save to Firebase first
+                if (isFirebaseConnected) {
+                    const firebaseKey = await FirebaseSync.savePost(newPost);
+                    newPost.firebaseKey = firebaseKey;
+                    showSyncNotification('☁️ リアルタイム同期中...', 'info');
+                } else {
+                    // Fallback to localStorage
+                    userPosts.unshift(newPost);
+                    localStorage.setItem('userSubmissions', JSON.stringify(userPosts));
+                    renderArchive();
+                    showSyncNotification('📱 ローカルに保存されました', 'warning');
+                }
+                
+                // Reset form and clear upload preview
+                document.getElementById('shareForm').reset();
+                resetFileUpload();
+                
+                // Show success message
+                showNotification('投稿が完了しました！');
+                
+                // Scroll to archive section
+                document.getElementById('archive').scrollIntoView({ behavior: 'smooth' });
+                
+            } catch (error) {
+                console.error('Save failed:', error);
+                // Fallback to localStorage on Firebase failure
+                userPosts.unshift(newPost);
+                localStorage.setItem('userSubmissions', JSON.stringify(userPosts));
+                renderArchive();
+                
+                showNotification('投稿は保存されましたが、同期に失敗しました', true);
+            }
         }
     });
 }
@@ -512,23 +641,49 @@ function formatTimestamp(timestamp) {
 }
 
 // Delete user post
-function deleteUserPost(postId) {
+async function deleteUserPost(postId) {
     if (confirm('この投稿を削除しますか？')) {
-        userPosts = userPosts.filter(post => post.id !== postId);
-        localStorage.setItem('userSubmissions', JSON.stringify(userPosts));
-        renderArchive();
-        closeModal();
-        showNotification('投稿を削除しました');
+        try {
+            const post = userPosts.find(p => p.id === postId);
+            
+            if (isFirebaseConnected && post?.firebaseKey) {
+                await FirebaseSync.deletePost(post.firebaseKey);
+                showSyncNotification('☁️ クラウドから削除中...', 'info');
+            } else {
+                userPosts = userPosts.filter(post => post.id !== postId);
+                localStorage.setItem('userSubmissions', JSON.stringify(userPosts));
+                renderArchive();
+            }
+            
+            closeModal();
+            showNotification('投稿を削除しました');
+            
+        } catch (error) {
+            console.error('Delete failed:', error);
+            showNotification('削除に失敗しました', true);
+        }
     }
 }
 
 // Clear all user posts (admin function)
-function clearAllUserPosts() {
+async function clearAllUserPosts() {
     if (confirm('全ての投稿を削除しますか？この操作は元に戻せません。')) {
-        userPosts = [];
-        localStorage.removeItem('userSubmissions');
-        renderArchive();
-        showNotification('全ての投稿を削除しました');
+        try {
+            if (isFirebaseConnected) {
+                await FirebaseSync.clearAllPosts();
+                showSyncNotification('☁️ 全てのデータを削除中...', 'info');
+            } else {
+                userPosts = [];
+                localStorage.removeItem('userSubmissions');
+                renderArchive();
+            }
+            
+            showNotification('全ての投稿を削除しました');
+            
+        } catch (error) {
+            console.error('Clear all failed:', error);
+            showNotification('削除に失敗しました', true);
+        }
     }
 }
 
@@ -615,6 +770,53 @@ function importUserData(event) {
     };
     
     reader.readAsText(file);
+}
+
+// Show sync-specific notifications
+function showSyncNotification(message, type = 'info') {
+    const syncStatus = document.getElementById('syncStatus');
+    const syncIndicator = document.getElementById('syncIndicator');
+    const syncText = document.getElementById('syncText');
+    
+    if (!syncStatus) return;
+    
+    // Update sync status UI
+    const indicators = {
+        'info': '🔄',
+        'success': '✅',
+        'warning': '⚠️',
+        'error': '❌'
+    };
+    
+    const colors = {
+        'info': '#17a2b8',
+        'success': '#28a745',
+        'warning': '#ffc107',
+        'error': '#dc3545'
+    };
+    
+    syncIndicator.textContent = indicators[type] || '🔄';
+    syncText.textContent = message;
+    syncStatus.style.borderLeftColor = colors[type] || '#17a2b8';
+    syncStatus.style.backgroundColor = type === 'success' ? '#d4edda' : 
+                                     type === 'error' ? '#f8d7da' :
+                                     type === 'warning' ? '#fff3cd' : '#d1ecf1';
+    
+    // Auto-hide after delay for non-persistent messages
+    if (type === 'info') {
+        setTimeout(() => {
+            updateSyncStatus();
+        }, 3000);
+    }
+}
+
+// Update sync status display
+function updateSyncStatus() {
+    if (isFirebaseConnected) {
+        showSyncNotification('☁️ リアルタイム同期中', 'success');
+    } else {
+        showSyncNotification('📱 ローカルモード（同期なし）', 'warning');
+    }
 }
 
 // Show notification with optional error styling

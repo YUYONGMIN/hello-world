@@ -7,6 +7,37 @@
     <meta name="description" content="人々はお菓子やアイスに、新しい遊び方・見つけ方・こだわりを作り出している。食べる商品の新しい楽しみ方を観察・共有するアーカイブサイト">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+        import { getDatabase, ref, push, set, onValue, remove } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js';
+        
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBYt8Q3z2K1vOH-xGZ8X4R2VGE3d5HwABC",
+            authDomain: "oyatsu-archive.firebaseapp.com",
+            databaseURL: "https://oyatsu-archive-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "oyatsu-archive",
+            storageBucket: "oyatsu-archive.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef123456789"
+        };
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        
+        // Make Firebase available globally
+        window.firebaseDB = {
+            database,
+            ref,
+            push,
+            set,
+            onValue,
+            remove
+        };
+    </script>
 </head>
 <body>
     <header class="header">
@@ -475,6 +506,12 @@
             <div class="container">
                 <h2 class="section-title">みんなの楽しみ方</h2>
                 <p class="section-subtitle">人々によって生まれた、新しい楽しみ方のアーカイブ</p>
+                
+                <!-- Sync Status Indicator -->
+                <div class="sync-status" id="syncStatus">
+                    <span class="sync-indicator" id="syncIndicator">🔄</span>
+                    <span class="sync-text" id="syncText">同期状態を確認中...</span>
+                </div>
                 
                 <!-- Data Management Controls -->
                 <div class="data-management">
