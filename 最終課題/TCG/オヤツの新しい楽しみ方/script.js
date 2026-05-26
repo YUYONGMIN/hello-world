@@ -3,7 +3,7 @@ const initialData = {
     "pino": {
         productName: "ピノ",
         category: "発見・収集型",
-        originalPurpose: "一口サイズのアイスクリームとして、手軽に楽しむ",
+        originalPurpose: "チョコレート味の小さいサイズのアイスクリーム",
         userReinterpretation: "星型やハート型などのレアな形状のピノを探して楽しむ",
         newCulture: "レアピノ探しがSNSで話題となり、見つけた時の喜びをシェアする文化",
         why: "同じ商品でも形が違うことで特別感を感じられ、発見の喜びがある",
