@@ -53,11 +53,13 @@ body {
     text-decoration: none;
     color: #666;
     font-weight: 400;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, transform 0.3s ease;
+    display: inline-block;
 }
 
 .nav-links a:hover {
     color: #333;
+    transform: scale(1.15);
 }
 
 /* Hero Section */
